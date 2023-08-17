@@ -54,12 +54,23 @@ export default function TasksList({ }: Props) {
 		})
 	}
 
-	const tasksList = useMemo(() => list.map(item => <TaskItem key={item.id} item={item} deleteTask={deleteTask} updateTask={openTaskDialogInEditMode} />), [list])
+	const tasksList = useMemo(() => {
+		if(!list.length){
+			return <img src="/emptyImage.jpg" width="100%" />
+		}
+		
+		return list.map(item => <TaskItem
+			key={item.id}
+			item={item}
+			deleteTask={deleteTask}
+			openEditTaskdialog={openTaskDialogInEditMode}
+		/>)
+	}, [list])
 
 	return (
 		<Box maxWidth="650px" margin="20px auto 0">
 			<Stack direction="row" marginBottom="30px">
-				<Typography variant="h1">TODO app</Typography>
+				<Typography variant="h1" marginRight="20px">TODO app</Typography>
 				<Button variant='contained' onClick={addTaskToList}><AddIcon /></Button>
 			</Stack>
 

@@ -9,15 +9,21 @@ function App() {
 	const theme = createTheme({
 		palette: {
 			primary: {
-				main: "#E8EDE7"
+				main: "#0e1e2b",
+				dark: "#010305",
+				light: "#1c3d52",
+				contrastText: "#fff"
 			},
 			secondary: {
-				main: "#81BECE"
-			}
+				main: "#1c3d52",
+				light: "#F6F2F0",
+				contrastText: "#000"
+			},
+
 		},
 		spacing: [20, 42, 5],
 		typography: {
-			h1:{
+			h1: {
 				fontSize: "37px"
 			},
 			h2: {

@@ -104,7 +104,7 @@ export default function AddTask({ closeDialog, task }: Props) {
 						<Button variant="outlined" color="secondary" onClick={closeDialog}>
 							Cancel
 						</Button>
-						<Button variant='contained' color='secondary' type='submit'>
+						<Button variant='contained' color='primary' type='submit'>
 							{!task ? "Add" : "Edit"}
 						</Button>
 					</Stack>
