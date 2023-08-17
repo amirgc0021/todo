@@ -10,12 +10,12 @@ import { addTask } from 'redux/listSlice';
 import type{ ItaskItem } from '../types';
 
 type Props = {
-	clsoeDialog: () => void
+	closeDialog: () => void
 }
 
 type selectValOption = ItaskItem["priority"];
 
-export default function AddTask({clsoeDialog }: Props) {
+export default function AddTask({closeDialog }: Props) {
 	const dispatch = useDispatch();
 
 	const onFormSubmitted = (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,7 +29,7 @@ export default function AddTask({clsoeDialog }: Props) {
 			priority: formData.get("priority") as selectValOption
 		}));
 
-		clsoeDialog()
+		closeDialog()
 	}
 	return (
 		<>
@@ -69,7 +69,7 @@ export default function AddTask({clsoeDialog }: Props) {
 
 
 					<Stack direction="row" spacing={2} justifyContent={'flex-end'} useFlexGap>
-						<Button variant="outlined" color="secondary" onClick={clsoeDialog}>
+						<Button variant="outlined" color="secondary" onClick={closeDialog}>
 							Cancel
 						</Button>
 						<Button variant='contained' color='secondary' type='submit'>
