@@ -1,26 +1,27 @@
-import { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppState } from 'redux/store';
 import TaskItem from '../taskItem/TaskItem';
-import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
 import AddTask from '../addTask/AddTask';
-import { addTask } from 'redux/listSlice';
 import Grid from '@mui/material/Grid';
+
+import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import type { AppState } from 'redux/store';
 
 type Props = {};
 
 export default function TasksList({ }: Props) {
 	const list = useSelector((state: AppState) => state.listSlice.todoList);
-	const dispatch = useDispatch();
 
-	const [activeUpdateTask, setActiveUpdateTask] = useState(null);
+	const [activeUpdateTask, setActiveUpdateTask] = useState(false);
 
 	const addTaskToList = () => {
-		dispatch(addTask({
-			title: "amir",
-			description: "new task",
-			priority: "high"
-		}))
+
+		setActiveUpdateTask(true)
+	}
+
+	const closeDialog = () => {
+		setActiveUpdateTask(false)
 	}
 
 	const tasksList = useMemo(() => list.map(item => <TaskItem key={item.id} item={item} />), [list])
@@ -32,9 +33,9 @@ export default function TasksList({ }: Props) {
 			</Grid>
 
 			<button onClick={addTaskToList}>Add</button>
-			<Modal open={false}>
-				<AddTask />
-			</Modal>
+			<Dialog open={activeUpdateTask} sx={{p: 0}}>
+				<AddTask clsoeDialog={closeDialog} />
+			</Dialog>
 		</div>
 	)
 }

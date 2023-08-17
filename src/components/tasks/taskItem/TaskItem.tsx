@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CheckBox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
@@ -23,8 +22,7 @@ export default function TaskItem({ item }: Props) {
 	}
 
 	return (
-		<Grid item>
-			<Grid container className={styles.wrapper} sx={{ bgcolor: "primary.main", p: 0 }} alignItems="center">
+			<Grid container item className={styles.wrapper} sx={{ bgcolor: "primary.main", p: 0 }} alignItems="center">
 				<Grid item>
 					<CheckBox checked={isDone} onChange={updateTaskDoneState} />
 				</Grid>
@@ -36,6 +34,5 @@ export default function TaskItem({ item }: Props) {
 					<Typography paragraph>{item.description}</Typography>
 				</Grid>
 			</Grid>
-		</Grid>
 	)
 }

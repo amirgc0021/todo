@@ -1,28 +1,91 @@
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { useDispatch } from 'react-redux';
+import { addTask } from 'redux/listSlice';
 
-type Props = {}
+import type{ ItaskItem } from '../types';
 
-export default function AddTask({ }: Props) {
+type Props = {
+	clsoeDialog: () => void
+}
+
+type selectValOption = ItaskItem["priority"];
+
+export default function AddTask({clsoeDialog }: Props) {
+	const dispatch = useDispatch();
+
+	const onFormSubmitted = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		const formData = new FormData(e.currentTarget);
+
+		dispatch(addTask({
+			title: formData.get("title") as string,
+			description: formData.get("description") as string,
+			priority: formData.get("priority") as selectValOption
+		}));
+
+		clsoeDialog()
+	}
 	return (
-		<Box>
-			<input />
+		<>
+			<DialogTitle>Add new Task</DialogTitle>
+
+			<DialogContent>
+				<form onSubmit={onFormSubmitted}>
+
+					<TextField
+						label="Task title"
+						variant="standard"
+						name='title'
+						fullWidth
+					/>
+					<TextField
+						label="Task description"
+						multiline
+						rows={4}
+						maxRows={4}
+						fullWidth
+						margin='normal'
+						name='description'
+
+					/>
+					<TextField
+						label="Priority"
+						select
+						fullWidth
+						helperText="Please select prioirty of task"
+						margin='normal'
+						name="priority"
+					>
+						<MenuItem value="low">Low</MenuItem>
+						<MenuItem value="medium">Medium</MenuItem>
+						<MenuItem value="high">High</MenuItem>
+					</TextField>
+
+
+					<Stack direction="row" spacing={2} justifyContent={'flex-end'} useFlexGap>
+						<Button variant="outlined" color="secondary" onClick={clsoeDialog}>
+							Cancel
+						</Button>
+						<Button variant='contained' color='secondary' type='submit'>
+							Add
+						</Button>
+					</Stack>
+				</form>
+
+
+			</DialogContent>
+			{/* <input />
 			<textarea />
 
 			<InputLabel id="demo-simple-select-label">Priority</InputLabel>
-			<Select
-				labelId="demo-simple-select-label"
-				id="demo-simple-select"
-				label="Age"
-			>
-				<MenuItem value="Low">Low</MenuItem>
-				<MenuItem value="Medium">Medium</MenuItem>
-				<MenuItem value="High">High</MenuItem>
-			</Select>
 
-			<button>Save</button>
-		</Box>
+			<button>Save</button> */}
+		</>
 	)
 }

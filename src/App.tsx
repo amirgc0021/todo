@@ -1,6 +1,6 @@
 import { TaskList } from 'components/tasks';
 import './App.css';
-import { createTheme, colors, ThemeProvider } from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material'
 
 
 function App() {
@@ -11,8 +11,11 @@ function App() {
 			primary: {
 				main: "#E8EDE7"
 			},
+			secondary: {
+				main: "#81BECE"
+			}
 		},
-		spacing: [20,42,5],
+		spacing: [20, 42, 5],
 		typography: {
 			h2: {
 				fontSize: "23px"
