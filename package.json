@@ -2,8 +2,8 @@
   "name": "todo",
   "private": true,
   "version": "1.0.0",
-	"description": "Track you daily assignments",
-	"author": "Amir gal cohen",
+  "description": "Track you daily assignments",
+  "author": "Amir gal cohen",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -27,6 +27,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-tsconfig-paths": "^4.2.0"
   }
 }
