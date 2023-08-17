@@ -1,3 +1,4 @@
+import { Button } from "@mui/material"
 import type { T_todoItem } from "./types"
 
 type Props = {
@@ -6,6 +7,9 @@ type Props = {
 
 export default function ToDoItem({item}: Props) {
 	return (
-		<div>ToDoItem</div>
+		<div>
+			{item.title}
+			<Button variant="text" >amir</Button>
+			</div>
 	)
 }

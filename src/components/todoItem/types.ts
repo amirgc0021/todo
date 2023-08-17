@@ -3,6 +3,6 @@ export type T_todoItem = {
 	title: string,
 	description: string,
 	priority: "low" | "medium" | "high",
-	timesstamp: number,
+	timestamp: number,
 	done: boolean
 }
