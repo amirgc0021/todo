@@ -1,4 +1,4 @@
-export type T_todoItem = {
+export interface ItaskItem {
 	id: string,
 	title: string,
 	description: string,
@@ -6,3 +6,5 @@ export type T_todoItem = {
 	timestamp: number,
 	done: boolean
 }
+
+export type newItemAction = Pick<ItaskItem, "title" | "description" | "priority">

@@ -1,16 +1,37 @@
+import { TaskList } from 'components/tasks';
 import './App.css';
-import { useSelector } from 'react-redux';
-import type { AppState } from 'redux/store';
-import {ToDoItem} from './components/todoItem';
+import { createTheme, colors, ThemeProvider } from '@mui/material'
+
 
 function App() {
-	const list = useSelector((state: AppState) => state.listSlice.todoList)
+	// const [openAddTaskModal, setOpenAddTaskModal] = useState<boolean>(false);
+
+	const theme = createTheme({
+		palette: {
+			primary: {
+				main: "#E8EDE7"
+			},
+		},
+		spacing: [20,42,5],
+		typography: {
+			h2: {
+				fontSize: "23px"
+			}
+		}
+	})
+
 	return (
-		<div>
-			<h1>To do list</h1>
-			
-			{list.map(item => <ToDoItem item={item} />)}
-		</div>
+		<ThemeProvider theme={theme}>
+			<div>
+
+				<h1>To do list</h1>
+
+				<TaskList />
+
+
+				{/* <button onClick={() => setOpenAddTaskModal(true)}>open Modal</button> */}
+			</div>
+		</ThemeProvider>
 	)
 }
 
