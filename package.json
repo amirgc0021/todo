@@ -1,8 +1,9 @@
 {
   "name": "todo",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+	"description": "Track you daily assignments",
+	"author": "Amir gal cohen",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
