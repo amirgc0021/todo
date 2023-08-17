@@ -13,6 +13,9 @@ export const listSlice = createSlice({
 	name: "listSlice",
 	initialState,
 	reducers: {
+		/**
+		 * Add new task.
+		 */
 		addTask: (state, action: PayloadAction<newItemAction>) => {
 			const {title, description, priority} = action.payload;
 			const newTodo = new GenerateTask(title, description, priority );
@@ -25,12 +28,18 @@ export const listSlice = createSlice({
 				]
 			}
 		},
+		/**
+		 * Remove task
+		 */
 		removeTask: (state, action: PayloadAction<string>) => {
 			return {
 				...state,
 				todoList: state.todoList.filter(task => task.id !== action.payload)
 			}
 		},
+		/**
+		 * Edit task (edit any value)
+		 */
 		editTask: (state, action: PayloadAction<ItaskItem>) => {
 			const editedTask = action.payload;
 

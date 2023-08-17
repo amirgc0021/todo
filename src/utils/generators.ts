@@ -1,11 +1,16 @@
 import { ItaskItem } from "components/tasks/types";
 import { generateID } from "./utils";
 
+/**
+ * Generate task item.
+ * 
+ * @class
+ */
 export class GenerateTask implements ItaskItem {
-	id: string;
+	readonly id: string;
 	title: string;
 	description: string;
-	timestamp: number;
+	readonly timestamp: number;
 	priority: ItaskItem["priority"];
 	done: boolean;
 
