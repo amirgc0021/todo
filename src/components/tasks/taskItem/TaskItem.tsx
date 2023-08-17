@@ -14,9 +14,10 @@ import { toDate } from "utils/utils";
 type Props = {
 	item: ItaskItem,
 	deleteTask: (id: string) => void
+	updateTask: (task: ItaskItem) => void
 }
 
-export default function TaskItem({ item, deleteTask }: Props) {
+export default function TaskItem({ item, deleteTask, updateTask }: Props) {
 	const [isDone, setIsDone] = useState<boolean>(item.done);
 
 	const updateTaskDoneState = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +26,10 @@ export default function TaskItem({ item, deleteTask }: Props) {
 
 	const removeTask = () => {
 		deleteTask(item.id)
+	}
+
+	const _updateTask = () => {
+		updateTask(item)
 	}
 
 	return (
@@ -43,6 +48,9 @@ export default function TaskItem({ item, deleteTask }: Props) {
 			<Grid item justifySelf="end">
 				<Button onClick={removeTask}>
 					Delete
+				</Button>
+				<Button onClick={_updateTask}>
+					Edit
 				</Button>
 			</Grid>
 		</Grid>

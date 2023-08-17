@@ -30,9 +30,23 @@ export const listSlice = createSlice({
 				...state,
 				todoList: state.todoList.filter(task => task.id !== action.payload)
 			}
-		}
+		},
+		editTask: (state, action: PayloadAction<ItaskItem>) => {
+			const editedTask = action.payload;
+
+			return {
+				...state,
+				todoList: state.todoList.map(task => {
+					if(editedTask.id === task.id){
+						return editedTask
+					}
+
+					return task
+				})
+			}
+		}, 
 	}
 })
 
-export const { addTask, removeTask } = listSlice.actions;
+export const { addTask, removeTask, editTask } = listSlice.actions;
 export default listSlice.reducer;
