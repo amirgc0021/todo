@@ -17,6 +17,9 @@ function App() {
 		},
 		spacing: [20, 42, 5],
 		typography: {
+			h1:{
+				fontSize: "37px"
+			},
 			h2: {
 				fontSize: "23px"
 			}
@@ -25,15 +28,7 @@ function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<div>
-
-				<h1>To do list</h1>
-
-				<TaskList />
-
-
-				{/* <button onClick={() => setOpenAddTaskModal(true)}>open Modal</button> */}
-			</div>
+			<TaskList />
 		</ThemeProvider>
 	)
 }

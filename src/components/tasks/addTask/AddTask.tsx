@@ -43,7 +43,7 @@ export default function AddTask({ closeDialog, task }: Props) {
 				priority: formData.get("priority") as selectValOption
 			}
 
-			dispatch(editTask(editedTask))
+			dispatch(editTask(editedTask));
 		}
 
 		closeDialog();
