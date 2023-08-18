@@ -6,7 +6,7 @@ Track all your daily tasks in one place.
 - Adding, removing and updating tasks.
 - Setting priority of a task.
 - Tasks saved in local storage for data persisiting.
-
+- Adding lists to store related tasks together
 ## Installition
 1) Download the app from github.
 2) Install dependencies\
