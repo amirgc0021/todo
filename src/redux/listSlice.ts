@@ -88,17 +88,6 @@ export const listSlice = createSlice({
 					return list;
 				})
 			}
-
-			return {
-				...state,
-				todoList: state.todoList.map(task => {
-					if (editedTask.id === task.id) {
-						return editedTask
-					}
-
-					return task
-				})
-			}
 		},
 	}
 })

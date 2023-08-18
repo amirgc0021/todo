@@ -49,7 +49,6 @@ export default function TaskItem({ item, listId, openEditTaskDialog }: Props) {
 		}))
 	}
 
-
 	// delete a task
 	const deleteTask = () => {
 		dispatch(removeTask({

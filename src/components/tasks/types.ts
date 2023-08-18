@@ -25,5 +25,5 @@ export type removeTaskAction = {
 }
 
 export type editTaskAction = removeTaskAction & {
-	taskData: {[key:string]: any}
+	taskData: Partial<ItaskItem>
 }
