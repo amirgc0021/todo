@@ -4,15 +4,15 @@
 		"title": "Clean my room",
 		"description": "clean my room before mom kills me",
 		"priority": "high",
-		"timestamp": 1692283079607,
+		"timestamp": 1692383079607,
 		"done": false
 	},
 	{
 		"id": "323321",
 		"title": "Clean kitchen",
 		"description": "",
-		"priority": "high",
-		"timestamp": 1692283079607,
+		"priority": "low",
+		"timestamp": 1692283080607,
 		"done": true
 	}
 ]

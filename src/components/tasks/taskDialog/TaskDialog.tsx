@@ -1,14 +1,9 @@
-import MenuItem from '@mui/material/MenuItem';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask, editTask } from 'redux/listSlice';
+import { createTask, editTask } from 'redux/listSlice';
 
+import { MenuItem, TextField, DialogTitle, DialogContent, Button, Stack } from '@mui/material';
 import type { ItaskItem } from '../types';
-import { useState } from 'react';
 
 type Props = {
 	closeDialog: () => void,
@@ -17,55 +12,59 @@ type Props = {
 
 type selectValOption = ItaskItem["priority"];
 
-export default function AddTask({ closeDialog, task }: Props) {
+export default function TaskDialog({ closeDialog, task }: Props) {
 	const dispatch = useDispatch();
 
-	const [title, setTitle] = useState<string>(task?.title || "")
-	const [description, setDescription] = useState<string>(task?.description || "")
-	const [priority, setPriority] = useState<selectValOption>(task?.priority || "low")
+	const [title, setTitle] = useState<string>(task?.title || "");
+	const [description, setDescription] = useState<string>(task?.description || "");
+	const [priority, setPriority] = useState<selectValOption>(task?.priority || "low");
 
+	// when form has been submitted
 	const onFormSubmitted = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
+		e.preventDefault();
 
+		// get the submitted data 
 		const formData = new FormData(e.currentTarget);
 
+		// if task in falsy we are in new mode, so create new task
 		if (!task) {
-			dispatch(addTask({
+			dispatch(createTask({
 				title: formData.get("title") as string,
 				description: formData.get("description") as string,
 				priority: formData.get("priority") as selectValOption
 			}));
 		} else {
-			const editedTask: ItaskItem = {
+			// we are in edit mode so send the updated values
+			dispatch(editTask({
 				...task,
 				title: formData.get("title") as string,
 				description: formData.get("description") as string,
 				priority: formData.get("priority") as selectValOption
-			}
-
-			dispatch(editTask(editedTask));
+			}));
 		}
 
 		closeDialog();
 	}
 
-	const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setTitle(e.target.value)
-	}
-	const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setDescription(e.target.value)
-	}
-	const handlePriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPriority(e.target.value as selectValOption)
-	}
+	// input change handlers
+	const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		setTitle(e.target.value);
+	}, [])
+
+	const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setDescription(e.target.value);
+	}, [])
+
+	const handlePriorityChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		setPriority(e.target.value as selectValOption);
+	},[])
 
 	return (
 		<>
-			<DialogTitle>{!task ? "Add new Task" : "Edit Task"}</DialogTitle>
+			<DialogTitle>{!task ? "Add New Task" : "Edit Task"}</DialogTitle>
 
 			<DialogContent>
 				<form onSubmit={onFormSubmitted}>
-
 					<TextField
 						label="Task title"
 						variant="standard"
@@ -77,13 +76,13 @@ export default function AddTask({ closeDialog, task }: Props) {
 					/>
 					<TextField
 						label="Task description"
-						multiline
 						rows={4}
-						fullWidth
 						margin='normal'
 						name='description'
 						value={description}
 						onChange={handleDescriptionChange}
+						multiline
+						fullWidth
 					/>
 
 					<TextField
@@ -102,23 +101,15 @@ export default function AddTask({ closeDialog, task }: Props) {
 					</TextField>
 
 					<Stack direction="row" spacing={2} justifyContent={'flex-end'} useFlexGap>
-						<Button variant="outlined" color="secondary" onClick={closeDialog}>
+						<Button variant="outlined" sx={{ color: "secondary" }} onClick={closeDialog}>
 							Cancel
 						</Button>
-						<Button variant='contained' color='primary' type='submit'>
+						<Button variant='contained' sx={{ bgcolor: "secondary" }} type='submit'>
 							{!task ? "Add" : "Edit"}
 						</Button>
 					</Stack>
 				</form>
-
-
 			</DialogContent>
-			{/* <input />
-			<textarea />
-
-			<InputLabel id="demo-simple-select-label">Priority</InputLabel>
-
-			<button>Save</button> */}
 		</>
 	)
 }

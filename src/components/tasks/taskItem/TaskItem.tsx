@@ -1,24 +1,17 @@
 import React, { useState } from "react";
-import Typography from '@mui/material/Typography';
-import CheckBox from '@mui/material/Checkbox';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+
+import {Typography, Checkbox, Stack, Box, Menu, MenuItem, IconButton, ListItemIcon, ListItemText} from '@mui/material';
 import { useDispatch } from "react-redux";
-import { editTask } from 'redux/listSlice';
+import { editTask, removeTask } from 'redux/listSlice';
 import { PrioityLabel } from "components/priority";
 
 //types
 import type { ItaskItem } from "../types"
 
-// styles and utils
-import styles from "./TaskItem.module.css";
+// utils
 import { toDate } from "utils/utils";
 
+// icons
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Create';
@@ -27,45 +20,47 @@ import InfoIcon from '@mui/icons-material/Info';
 
 type Props = {
 	item: ItaskItem,
-	deleteTask: (id: string) => void
-	openEditTaskdialog: (task: ItaskItem) => void
+	openEditTaskDialog: (task: ItaskItem) => void
 }
 
-export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props) {
+export default function TaskItem({ item, openEditTaskDialog }: Props) {
 	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
 	const open = Boolean(anchorEl);
 
+	// menu dialog open/close functions
+	const openItemMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const closeTaskMenu = () => {
+		setAnchorEl(null);
+	};
+
+	// updating item done state
 	const updateTaskDoneState = (event: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(editTask({ ...item, done: event.target.checked }))
 	}
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-	const removeTask = () => {
-		deleteTask(item.id)
+	// delete a task
+	const deleteTask = () => {
+		dispatch(removeTask(item.id))
 	}
 
 	const openEditDialog = () => {
-		openEditTaskdialog(item);
-		handleClose()
+		openEditTaskDialog(item);
+		closeTaskMenu();
 	}
 
 	return (
-		<Stack className={styles.wrapper} sx={{ bgcolor: "primary.light", p: 0, borderRadius: "10px"}} alignItems="center" direction="row">
+		<Stack sx={{ bgcolor: "primary.light", p: 0, borderRadius: "10px" }} alignItems="center" direction="row">
 			<Box>
-				<CheckBox checked={item.done} checkedIcon={<CheckBoxIcon sx={{color: "primary.contrastText"}} />} onChange={updateTaskDoneState} />
+				<Checkbox checked={item.done} checkedIcon={<CheckBoxIcon />} onChange={updateTaskDoneState} />
 			</Box>
 
 			<Box>
 				<Typography variant="h2">{item.title}</Typography>
-				<Typography variant="subtitle1">{toDate(item.timestamp)}</Typography>
+				{/* <Typography variant="subtitle1">{toDate(item.timestamp)}</Typography> */}
 				<Typography variant="body2">{item.description}</Typography>
 			</Box>
 
@@ -73,8 +68,8 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 				<PrioityLabel label={item.priority} />
 			</Box>
 
-			<Stack direction="row" gap={"10px"} useFlexGap>
-				<IconButton aria-label="delete" onClick={handleClick}>
+			<Box>
+				<IconButton aria-label="delete" onClick={openItemMenu}>
 					<MoreHorizIcon />
 				</IconButton>
 
@@ -82,7 +77,7 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 					id="basic-menu"
 					anchorEl={anchorEl}
 					open={open}
-					onClose={handleClose}
+					onClose={closeTaskMenu}
 					anchorOrigin={{
 						vertical: 'bottom',
 						horizontal: 'center',
@@ -91,7 +86,7 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 						'aria-labelledby': 'more options',
 					}}
 				>
-					<MenuItem  onClick={removeTask}>
+					<MenuItem onClick={deleteTask}>
 						<ListItemIcon color='primary' aria-label="delete">
 							<DeleteIcon fontSize="small" />
 						</ListItemIcon>
@@ -112,7 +107,7 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 						<ListItemText>Info</ListItemText>
 					</MenuItem>
 				</Menu>
-			</Stack>
+			</Box>
 		</Stack>
 	)
 }
