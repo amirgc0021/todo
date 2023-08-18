@@ -14,16 +14,23 @@ export interface ItaskItem {
 	done: boolean
 }
 
-export type newTaskAction = {
+type EntityAction = {
 	listId: string,
-	taskData: Pick<ItaskItem, "title" | "description" | "priority">,
 }
 
-export type removeTaskAction = {
-	listId: string,
-	taskId: string
+export type newTaskAction = EntityAction & {
+	taskData: Pick<ItaskItem, "title" | "description" | "priority">,
 }
 
 export type editTaskAction = removeTaskAction & {
 	taskData: Partial<ItaskItem>
+}
+
+export type removeTaskAction = EntityAction & {
+	taskId: string
+}
+
+
+export type editListAction = EntityAction & {
+	listData: Partial<IList>
 }

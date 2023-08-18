@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { IList, ItaskItem, newTaskAction, editTaskAction, removeTaskAction } from "components/tasks/types";
+import type { IList, ItaskItem, newTaskAction, editTaskAction, removeTaskAction, editListAction } from "components/tasks/types";
 import Tasks from "data/mockItems.json";
 import ListMockData from "data/lists.json";
 import { GenerateList, GenerateTask } from "utils/generators";
@@ -35,6 +35,21 @@ export const listSlice = createSlice({
 			return {
 				...state,
 				lists: [...state.lists, newList]
+			}
+		},
+		editList: (state, action: PayloadAction<editListAction>) => {
+			const { listId, listData } = action.payload;
+
+			return {
+				...state,
+				lists: state.lists.map(list => {
+					if (list.id === listId) {
+						return {
+							...list, ...listData
+						}
+					}
+					return list
+				})
 			}
 		},
 		/**
@@ -76,14 +91,12 @@ export const listSlice = createSlice({
 		 */
 		editTask: (state, action: PayloadAction<editTaskAction>) => {
 			const { listId, taskData, taskId } = action.payload;
-			
-			// const editedTask = action.payload;
-			
+
 			return {
 				...state,
 				lists: state.lists.map(list => {
 					if (list.id === listId)
-						return { ...list, tasks: list.tasks.map(task => taskId === task.id ? {...task, ...taskData} : task) };
+						return { ...list, tasks: list.tasks.map(task => taskId === task.id ? { ...task, ...taskData } : task) };
 
 					return list;
 				})
@@ -92,5 +105,5 @@ export const listSlice = createSlice({
 	}
 })
 
-export const { setActiveList, createList, createTask, removeTask, editTask } = listSlice.actions;
+export const { setActiveList, createList, editList, createTask, removeTask, editTask } = listSlice.actions;
 export default listSlice.reducer;
