@@ -65,11 +65,11 @@ export default function TaskItem({ item, listId, openEditTaskDialog }: Props) {
 	return (
 		<Stack sx={{ bgcolor: "primary.light", p: 0, borderRadius: "10px" }} alignItems="center" direction="row">
 			<Box>
-				<Checkbox checked={item.done} checkedIcon={<CheckBoxIcon />} onChange={updateTaskDoneState} />
+				<Checkbox color="secondary" checked={item.done} checkedIcon={<CheckBoxIcon />} onChange={updateTaskDoneState} />
 			</Box>
 
 			<Box>
-				<Typography variant="h2">{item.title}</Typography>
+				<Typography variant="h2" sx={{fontSize: "20px"}}>{item.title}</Typography>
 				{/* <Typography variant="subtitle1">{toDate(item.timestamp)}</Typography> */}
 				<Typography variant="body2">{item.description}</Typography>
 			</Box>

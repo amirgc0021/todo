@@ -1,14 +1,16 @@
 import { useRef, useState } from "react";
-import { Box, Button, List, TextField, Typography } from "@mui/material"
+import { Box, Button, Input, List, OutlinedInput, SxProps, TextField, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "redux/store"
 import { createList, setActiveList } from "redux/listSlice";
 import ListItem from "./ListItem";
+import AddIcon from '@mui/icons-material/Add';
 
 type Props = {}
 
 export default function Lists({ }: Props) {
 	const dispatch = useDispatch();
+
 	const lists = useSelector((state: AppState) => state.listSlice.lists);
 	const addItemRef = useRef<HTMLButtonElement>(null)
 
@@ -57,7 +59,7 @@ export default function Lists({ }: Props) {
 	}
 
 	return (
-		<Box sx={{ bgcolor: "primary.light", p: 0, mb: 1 }} width="300px" height="100vh">
+		<Box sx={{ bgcolor: "primary.main", p: 0 }} width="300px" height="100vh">
 			<Typography variant="h2">
 				My lists
 			</Typography>
@@ -72,13 +74,23 @@ export default function Lists({ }: Props) {
 						onClick={onListItemClicked}
 					/>)}
 
-					{displayNewListItem && <TextField placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} />}
+					<Box textAlign="center">
+						{displayNewListItem && <TextField sx={style} placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} />}
+					</Box>
 				</List>
 
-				<Box>
-					<Button ref={addItemRef} onClick={onAddItemClicked}>Add Item</Button>
+				<Box textAlign="center">
+					<Button variant="text" startIcon={<AddIcon />} onClick={onAddItemClicked} ref={addItemRef}>
+						{displayNewListItem ? "Add item" : "New List"}
+					</Button>
 				</Box>
 			</Box>
 		</Box>
 	)
+}
+
+const style = {
+	".Mui-focused":{
+		outline: "1px solid #000"
+	}
 }

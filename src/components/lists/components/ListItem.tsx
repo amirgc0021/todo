@@ -1,5 +1,4 @@
-import { ListItemButton } from '@mui/material'
-import React from 'react'
+import { Box, ListItemButton, SxProps } from '@mui/material'
 
 type Props = {
 	title: string,
@@ -8,14 +7,27 @@ type Props = {
 	onClick: (index: number) => void
 }
 
+const style: SxProps = [
+	{ paddingInline: 2, mb: 1 },
+	{
+		"&:hover": {
+			bgcolor: "primary.light"
+		}
+	}
+]
+
 export default function ListItem({ title, index, numTasks, onClick }: Props) {
 	const onItemClicked = () => {
 		onClick(index)
 	}
 	return (
-		<ListItemButton onClick={onItemClicked}>
-			{title}
-			{numTasks}
+		<ListItemButton onClick={onItemClicked} sx={style}>
+			<Box component="span">
+				{title}
+			</Box>
+			<Box component="span" sx={{p: "5px", ml: "auto"}}>
+				{numTasks}
+			</Box>
 		</ListItemButton>
 	)
 }

@@ -4,13 +4,12 @@ import { useSelector } from 'react-redux';
 import TaskItem from '../taskItem/TaskItem';
 import TaskDialog from '../taskDialog/TaskDialog';
 
-import { Dialog, Grid, Typography, Stack, Box, MenuItem, TextField, IconButton, Button } from '@mui/material';
+import { Dialog, Grid, Stack, Box, MenuItem, TextField, Button } from '@mui/material';
 
 import type { AppState } from 'redux/store';
 import type { ItaskItem } from '../types';
 
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import Header from '../components/Header';
 
 type TaskDialogType = {
@@ -103,7 +102,7 @@ export default function TasksList() {
 			</Stack>
 
 			<Box>
-				<Button variant="text" startIcon={<AddIcon />} onClick={openNewTaskDialog}>
+				<Button variant="text" startIcon={<AddIcon color='secondary' />} onClick={openNewTaskDialog}>
 					New Task
 				</Button>
 	
