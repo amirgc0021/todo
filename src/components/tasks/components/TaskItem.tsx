@@ -8,9 +8,6 @@ import { PrioityLabel } from "components/priority";
 //types
 import type { ItaskItem } from "../types"
 
-// utils
-import { toDate } from "utils/utils";
-
 // icons
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteIcon from '@mui/icons-material/Delete';

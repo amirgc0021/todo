@@ -1,5 +1,5 @@
-import TaskItem from "./taskItem/TaskItem";
-import TaskList from "./tasksList/TasksList";
+import TaskItem from "./components/TaskItem";
+import TaskList from "./components/TasksList";
 
 export{
 	TaskItem,

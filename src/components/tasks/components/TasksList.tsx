@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
-import TaskItem from '../taskItem/TaskItem';
-import TaskDialog from '../taskDialog/TaskDialog';
+import TaskItem from './TaskItem';
+import TaskDialog from './TaskDialog';
 
 import { Dialog, Grid, Stack, Box, MenuItem, TextField, Button } from '@mui/material';
 
@@ -10,7 +10,7 @@ import type { AppState } from 'redux/store';
 import type { ItaskItem } from '../types';
 
 import AddIcon from '@mui/icons-material/Add';
-import Header from '../components/Header';
+import Header from './Header';
 
 type TaskDialogType = {
 	open: boolean,

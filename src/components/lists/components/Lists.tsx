@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Box, Button, Input, List, OutlinedInput, SxProps, TextField, Typography } from "@mui/material"
+import { Box, Button, List, TextField, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "redux/store"
 import { createList, setActiveList } from "redux/listSlice";
@@ -90,7 +90,7 @@ export default function Lists({ }: Props) {
 }
 
 const style = {
-	".Mui-focused":{
+	".Mui-focused": {
 		outline: "1px solid #000"
 	}
 }
