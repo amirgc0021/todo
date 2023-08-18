@@ -7,10 +7,13 @@ import TaskDialog from '../taskDialog/TaskDialog';
 import { Dialog, Grid, Typography, Stack, Box, MenuItem, TextField, IconButton } from '@mui/material';
 
 import type { AppState } from 'redux/store';
-import type { ItaskItem } from '../types';
+import type { IList, ItaskItem } from '../types';
 
 import AddIcon from '@mui/icons-material/Add';
 
+type Props= {
+	list: IList
+}
 type TaskDialogType = {
 	open: boolean,
 	taskData: ItaskItem | null
@@ -18,8 +21,8 @@ type TaskDialogType = {
 
 type sortBy = "priority" | "time";
 
-export default function TasksList() {
-	const list = useSelector((state: AppState) => state.listSlice.todoList);
+export default function TasksList({List}: Props) {
+	const list = useSelector((state: AppState) => state.listSlice.activeList);
 
 	const [tasksList, setTasksList] = useState<typeof list>(list);
 
@@ -51,7 +54,7 @@ export default function TasksList() {
 
 	const handleSortByChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const sortBy = e.target.value as sortBy;
-		const copyTasks = [...tasksList];
+		const copyTasks = [...tasksList.tasks];
 		// update sort state
 		setActiveSort(sortBy);
 
@@ -72,8 +75,8 @@ export default function TasksList() {
 
 	// memo task list component to not rerender on unrealted updates
 	const tasksListMemo = useMemo(() => {
-		if (!tasksList.length) {
-			return <img src="/emptyImage.jpg" width="100%" />
+		if (!tasksList.tasks.length) {
+			return <img src="/emptyImage.jpg" width="500px" />
 		}
 
 		// this function going here to prevent new instance of this function
@@ -84,7 +87,7 @@ export default function TasksList() {
 			})
 		}
 
-		return tasksList.map(item => (
+		return tasksList.tasks.map(item => (
 			<TaskItem
 				key={item.id}
 				item={item}
@@ -94,9 +97,9 @@ export default function TasksList() {
 	}, [tasksList])
 
 	return (
-		<Box maxWidth="650px" margin="60px auto 0">
+		<Box>
 			<Stack direction="row" marginBottom="20px">
-				<Typography variant="h1" marginRight="20px">My list</Typography>
+				<Typography variant="h1" marginRight="20px">{list.title}</Typography>
 				<IconButton aria-label="add new task" onClick={openNewTaskDialog}>
 					<AddIcon />
 				</IconButton>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { TaskList } from 'components/tasks';
+import App from 'App.tsx';
 
 import ReduxProvider from './redux/ReduxProvider.tsx';
 import { ThemeProvider } from '@mui/material'
@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 		<ReduxProvider>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<TaskList />
+				<App />
 			</ThemeProvider>
 		</ReduxProvider>
 	</React.StrictMode>,

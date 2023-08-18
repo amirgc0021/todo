@@ -4,13 +4,22 @@ export default createTheme({
 	palette: {
 
 	},
-	spacing: [20, 42, 5],
+	spacing: [20, 35, 5],
 	typography: {
 		h1: {
 			fontSize: "37px"
 		},
 		h2: {
 			fontSize: "25px"
+		}
+	},
+	components:{
+		MuiListItemButton: {
+			styleOverrides: {
+				root: {
+					paddingLeft: 0
+				}
+			}
 		}
 	}
 })
