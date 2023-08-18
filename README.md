@@ -23,7 +23,10 @@ server should start on port: `3000`
 ## Side notes
 I tried to make the app as close to a real use case\
 which includes sorting by priorities, showing the date of the creation of a task\
-in a real sincario I would have added more features like:
+in a real scenario I would have added more features like:
 - Adding due time
 - Sharing tasks between pepole
 - More tasks types
+
+Data saved in localstorage, which at some point might break due to pass the 5MB limit.\
+in Real life app I would use a good database to store all data, I just wanted to do a quick POC and to persist the data.
