@@ -58,9 +58,9 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 	}
 
 	return (
-		<Stack className={styles.wrapper} sx={{ bgcolor: "secondary.light", p: 0, borderRadius: "10px", color: "secondary.contrastText" }} alignItems="center" direction="row">
+		<Stack className={styles.wrapper} sx={{ bgcolor: "primary.light", p: 0, borderRadius: "10px"}} alignItems="center" direction="row">
 			<Box>
-				<CheckBox checked={item.done} checkedIcon={<CheckBoxIcon />} onChange={updateTaskDoneState} />
+				<CheckBox checked={item.done} checkedIcon={<CheckBoxIcon sx={{color: "primary.contrastText"}} />} onChange={updateTaskDoneState} />
 			</Box>
 
 			<Box>
@@ -74,7 +74,7 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 			</Box>
 
 			<Stack direction="row" gap={"10px"} useFlexGap>
-				<IconButton aria-label="delete" color='primary' onClick={handleClick}>
+				<IconButton aria-label="delete" onClick={handleClick}>
 					<MoreHorizIcon />
 				</IconButton>
 

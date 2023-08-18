@@ -2,17 +2,20 @@ import { createTheme } from '@mui/material'
 
 export default createTheme({
 	palette: {
+		mode: "dark",
+		background:{
+			default: "#121212"
+		},
 		primary: {
-			main: "#0e1e2b",
-			dark: "#010305",
-			light: "#1c3d52",
+			main: "#121212",
 			contrastText: "#fff"
 		},
 		secondary: {
 			main: "#1c3d52",
 			light: "#F6F2F0",
-			contrastText: "#000"
+			contrastText: "#fff "
 		},
+		contrastThreshold: 4.5,
 	},
 	spacing: [20, 42, 5],
 	typography: {

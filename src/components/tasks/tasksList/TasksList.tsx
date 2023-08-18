@@ -55,10 +55,10 @@ export default function TasksList({ }: Props) {
 	}
 
 	const tasksList = useMemo(() => {
-		if(!list.length){
+		if (!list.length) {
 			return <img src="/emptyImage.jpg" width="100%" />
 		}
-		
+
 		return list.map(item => <TaskItem
 			key={item.id}
 			item={item}
@@ -68,10 +68,10 @@ export default function TasksList({ }: Props) {
 	}, [list])
 
 	return (
-		<Box maxWidth="650px" margin="20px auto 0">
-			<Stack direction="row" marginBottom="30px">
-				<Typography variant="h1" marginRight="20px">TODO app</Typography>
-				<Button variant='contained' onClick={addTaskToList}><AddIcon /></Button>
+		<Box maxWidth="650px" margin="60px auto 0">
+			<Stack direction="row" marginBottom="20px">
+				<Typography variant="h1" marginRight="20px">My list</Typography>
+				<Button variant='contained' onClick={addTaskToList} sx={{ bgcolor: "primary.light" }}><AddIcon /></Button>
 			</Stack>
 
 			<Grid container direction={"column"} rowGap={"10px"}>
