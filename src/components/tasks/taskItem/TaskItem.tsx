@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import {Typography, Checkbox, Stack, Box, Menu, MenuItem, IconButton, ListItemIcon, ListItemText} from '@mui/material';
+import { Typography, Checkbox, Stack, Box, Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useDispatch } from "react-redux";
 import { editTask, removeTask } from 'redux/listSlice';
 import { PrioityLabel } from "components/priority";
@@ -20,10 +20,11 @@ import InfoIcon from '@mui/icons-material/Info';
 
 type Props = {
 	item: ItaskItem,
+	listId: string,
 	openEditTaskDialog: (task: ItaskItem) => void
 }
 
-export default function TaskItem({ item, openEditTaskDialog }: Props) {
+export default function TaskItem({ item, listId, openEditTaskDialog }: Props) {
 	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
 	const open = Boolean(anchorEl);
@@ -39,12 +40,22 @@ export default function TaskItem({ item, openEditTaskDialog }: Props) {
 
 	// updating item done state
 	const updateTaskDoneState = (event: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(editTask({ ...item, done: event.target.checked }))
+		dispatch(editTask({
+			listId,
+			taskId: item.id,
+			taskData: {
+				done: event.target.checked
+			}
+		}))
 	}
+
 
 	// delete a task
 	const deleteTask = () => {
-		dispatch(removeTask(item.id))
+		dispatch(removeTask({
+			listId,
+			taskId: item.id
+		}))
 	}
 
 	const openEditDialog = () => {

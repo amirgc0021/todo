@@ -14,4 +14,16 @@ export interface ItaskItem {
 	done: boolean
 }
 
-export type newItemAction = Pick<ItaskItem, "title" | "description" | "priority">
+export type newTaskAction = {
+	listId: string,
+	taskData: Pick<ItaskItem, "title" | "description" | "priority">,
+}
+
+export type removeTaskAction = {
+	listId: string,
+	taskId: string
+}
+
+export type editTaskAction = removeTaskAction & {
+	taskData: {[key:string]: any}
+}

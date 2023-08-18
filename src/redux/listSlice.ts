@@ -1,19 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { IList, ItaskItem, newItemAction } from "components/tasks/types";
+import type { IList, ItaskItem, newTaskAction, editTaskAction, removeTaskAction } from "components/tasks/types";
 import Tasks from "data/mockItems.json";
 import ListMockData from "data/lists.json";
 import { GenerateList, GenerateTask } from "utils/generators";
 
 type SliceState = {
 	lists: IList[],
-	activeList: IList,
+	activeList: number,
 	todoList: ItaskItem[],
 }
 
 const initialState: SliceState = {
 	todoList: Tasks as ItaskItem[],
 	lists: ListMockData as IList[],
-	activeList: ListMockData[0] as IList
+	activeList: 0
 }
 
 export const listSlice = createSlice({
@@ -22,11 +22,11 @@ export const listSlice = createSlice({
 	reducers: {
 		setActiveList: (state, action: PayloadAction<number>) => {
 			const listIndex = action.payload;
-			if(listIndex >= state.lists.length) throw new Error("overflow");
-			
+			if (listIndex >= state.lists.length) throw new Error("overflow");
+
 			return {
 				...state,
-				activeList: state.lists[action.payload]
+				activeList: listIndex
 			}
 		},
 		createList: (state, action: PayloadAction<string>) => {
@@ -40,32 +40,54 @@ export const listSlice = createSlice({
 		/**
 		 * Add new task.
 		 */
-		createTask: (state, action: PayloadAction<newItemAction>) => {
-			const { title, description, priority } = action.payload;
-			const newTodo = new GenerateTask(title, description, priority);
+		createTask: (state, action: PayloadAction<newTaskAction>) => {
+			const { listId, taskData } = action.payload;
+			// const { title, description, priority } = action.payload;
+			const newTodo = new GenerateTask(taskData.title, taskData.description, taskData.priority);
 
 			return {
 				...state,
-				todoList: [
-					...state.todoList,
-					newTodo
-				]
+				lists: state.lists.map(list => {
+					if (list.id === listId)
+						return { ...list, tasks: [...list.tasks, newTodo] };
+
+					return list
+				})
 			}
 		},
 		/**
 		 * Remove task
 		 */
-		removeTask: (state, action: PayloadAction<string>) => {
+		removeTask: (state, action: PayloadAction<removeTaskAction>) => {
+			const { listId, taskId } = action.payload;
+
 			return {
 				...state,
-				todoList: state.todoList.filter(task => task.id !== action.payload)
+				lists: state.lists.map(list => {
+					if (list.id === listId)
+						return { ...list, tasks: list.tasks.filter(task => task.id !== taskId) };
+
+					return list
+				})
 			}
 		},
 		/**
 		 * Edit task (edit any value)
 		 */
-		editTask: (state, action: PayloadAction<ItaskItem>) => {
-			const editedTask = action.payload;
+		editTask: (state, action: PayloadAction<editTaskAction>) => {
+			const { listId, taskData, taskId } = action.payload;
+			
+			// const editedTask = action.payload;
+			
+			return {
+				...state,
+				lists: state.lists.map(list => {
+					if (list.id === listId)
+						return { ...list, tasks: list.tasks.map(task => taskId === task.id ? {...task, ...taskData} : task) };
+
+					return list;
+				})
+			}
 
 			return {
 				...state,

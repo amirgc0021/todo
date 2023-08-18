@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Box, Button, List, ListItemButton, TextField, Typography } from "@mui/material"
+import { Box, Button, List, TextField, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "redux/store"
 import { createList, setActiveList } from "redux/listSlice";
@@ -15,10 +15,12 @@ export default function Lists({ }: Props) {
 	const [displayNewListItem, setDisplayNewListItem] = useState<boolean>(false)
 	const [newListName, setNewListName] = useState<string>("")
 
+	// field change handler
 	const handleNewListChagne = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setNewListName(e.target.value)
 	}
 
+	// when input loses foucs
 	const onInputLoseFocus = (e: React.FocusEvent<HTMLInputElement>) => {
 		// id we clicked on the "add item button" do nothing and let the button event handle it
 		if (e.relatedTarget === addItemRef.current) return;
@@ -27,10 +29,12 @@ export default function Lists({ }: Props) {
 		setDisplayNewListItem(false);
 	}
 
+	// when list item clicked
 	const onListItemClicked = (index: number) => {
 		dispatch(setActiveList(index))
 	}
 
+	// add item clicked
 	const onAddItemClicked = () => {
 		const listName = newListName;
 

@@ -7,13 +7,10 @@ import TaskDialog from '../taskDialog/TaskDialog';
 import { Dialog, Grid, Typography, Stack, Box, MenuItem, TextField, IconButton } from '@mui/material';
 
 import type { AppState } from 'redux/store';
-import type { IList, ItaskItem } from '../types';
+import type { ItaskItem } from '../types';
 
 import AddIcon from '@mui/icons-material/Add';
 
-type Props= {
-	list: IList
-}
 type TaskDialogType = {
 	open: boolean,
 	taskData: ItaskItem | null
@@ -21,10 +18,10 @@ type TaskDialogType = {
 
 type sortBy = "priority" | "time";
 
-export default function TasksList({List}: Props) {
-	const list = useSelector((state: AppState) => state.listSlice.activeList);
+export default function TasksList() {
+	const list = useSelector((state: AppState) => state.listSlice.lists[state.listSlice.activeList]);
 
-	const [tasksList, setTasksList] = useState<typeof list>(list);
+	const [tasksList, setTasksList] = useState<ItaskItem[]>(list.tasks);
 
 	const [activeUpdateTask, setActiveUpdateTask] = useState<TaskDialogType>({ open: false, taskData: null });
 	const [activeSort, setActiveSort] = useState<sortBy>("priority");
@@ -33,7 +30,7 @@ export default function TasksList({List}: Props) {
 	// I created another "local state" that will listen for any update from original state
 	// but will also responsible to display local changes (sort) 
 	useEffect(() => {
-		setTasksList(list)
+		setTasksList(list.tasks)
 	}, [list])
 
 	// open the task dialog in "new" mode
@@ -54,7 +51,7 @@ export default function TasksList({List}: Props) {
 
 	const handleSortByChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const sortBy = e.target.value as sortBy;
-		const copyTasks = [...tasksList.tasks];
+		const copyTasks = [...tasksList];
 		// update sort state
 		setActiveSort(sortBy);
 
@@ -75,7 +72,7 @@ export default function TasksList({List}: Props) {
 
 	// memo task list component to not rerender on unrealted updates
 	const tasksListMemo = useMemo(() => {
-		if (!tasksList.tasks.length) {
+		if (!tasksList.length) {
 			return <img src="/emptyImage.jpg" width="500px" />
 		}
 
@@ -87,18 +84,19 @@ export default function TasksList({List}: Props) {
 			})
 		}
 
-		return tasksList.tasks.map(item => (
+		return tasksList.map(item => (
 			<TaskItem
 				key={item.id}
 				item={item}
+				listId={list.id}
 				openEditTaskDialog={openTaskDialogInEditMode}
 			/>
 		))
-	}, [tasksList])
+	}, [tasksList, list]);
 
 	return (
 		<Box>
-			<Stack direction="row" marginBottom="20px">
+			<Stack direction="row" marginBottom="20px" marginTop="20px">
 				<Typography variant="h1" marginRight="20px">{list.title}</Typography>
 				<IconButton aria-label="add new task" onClick={openNewTaskDialog}>
 					<AddIcon />
@@ -134,7 +132,7 @@ export default function TasksList({List}: Props) {
 			</Grid>
 
 			<Dialog open={activeUpdateTask.open} sx={{ p: 0 }} onClose={closeDialog}>
-				<TaskDialog task={activeUpdateTask.taskData} closeDialog={closeDialog} />
+				<TaskDialog task={activeUpdateTask.taskData} closeDialog={closeDialog} listId={list.id} />
 			</Dialog>
 		</Box>
 	)

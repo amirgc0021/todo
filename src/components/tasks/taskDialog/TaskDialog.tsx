@@ -7,12 +7,13 @@ import type { ItaskItem } from '../types';
 
 type Props = {
 	closeDialog: () => void,
-	task: ItaskItem | null
+	task: ItaskItem | null,
+	listId: string
 }
 
 type selectValOption = ItaskItem["priority"];
 
-export default function TaskDialog({ closeDialog, task }: Props) {
+export default function TaskDialog({ closeDialog, task, listId }: Props) {
 	const dispatch = useDispatch();
 
 	const [title, setTitle] = useState<string>(task?.title || "");
@@ -29,17 +30,23 @@ export default function TaskDialog({ closeDialog, task }: Props) {
 		// if task in falsy we are in new mode, so create new task
 		if (!task) {
 			dispatch(createTask({
-				title: formData.get("title") as string,
-				description: formData.get("description") as string,
-				priority: formData.get("priority") as selectValOption
+				listId,
+				taskData: {
+					title: formData.get("title") as string,
+					description: formData.get("description") as string,
+					priority: formData.get("priority") as selectValOption
+				}
 			}));
 		} else {
 			// we are in edit mode so send the updated values
 			dispatch(editTask({
-				...task,
-				title: formData.get("title") as string,
-				description: formData.get("description") as string,
-				priority: formData.get("priority") as selectValOption
+				listId,
+				taskId: task.id,
+				taskData: {
+					title: formData.get("title") as string,
+					description: formData.get("description") as string,
+					priority: formData.get("priority") as selectValOption
+				}
 			}));
 		}
 
@@ -57,7 +64,7 @@ export default function TaskDialog({ closeDialog, task }: Props) {
 
 	const handlePriorityChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setPriority(e.target.value as selectValOption);
-	},[])
+	}, [])
 
 	return (
 		<>
