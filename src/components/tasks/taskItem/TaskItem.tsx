@@ -3,9 +3,14 @@ import Typography from '@mui/material/Typography';
 import CheckBox from '@mui/material/Checkbox';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import { useDispatch } from "react-redux";
 import { editTask } from 'redux/listSlice';
+import { PrioityLabel } from "components/priority";
 
 //types
 import type { ItaskItem } from "../types"
@@ -17,6 +22,8 @@ import { toDate } from "utils/utils";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Create';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import InfoIcon from '@mui/icons-material/Info';
 
 type Props = {
 	item: ItaskItem,
@@ -26,17 +33,28 @@ type Props = {
 
 export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props) {
 	const dispatch = useDispatch();
+	const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
+	const open = Boolean(anchorEl);
 
 	const updateTaskDoneState = (event: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(editTask({ ...item, done: event.target.checked }))
 	}
+
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+    setAnchorEl(null);
+  };
 
 	const removeTask = () => {
 		deleteTask(item.id)
 	}
 
 	const openEditDialog = () => {
-		openEditTaskdialog(item)
+		openEditTaskdialog(item);
+		handleClose()
 	}
 
 	return (
@@ -51,20 +69,49 @@ export default function TaskItem({ item, deleteTask, openEditTaskdialog }: Props
 				<Typography variant="body2">{item.description}</Typography>
 			</Box>
 
-			<Stack marginLeft="auto" direction="row" gap={"10px"} useFlexGap>
-				<IconButton aria-label="delete" color='primary' onClick={removeTask}>
-					<DeleteIcon />
-				</IconButton>
-				<IconButton aria-label="edit" color='primary' onClick={openEditDialog}>
-					<EditIcon />
-				</IconButton>
-				{/* <IconButton variant='contained' color='primary' type='submit' >
-					<DeleteIcon />
+			<Box margin="0 50px 0 auto">
+				<PrioityLabel label={item.priority} />
+			</Box>
+
+			<Stack direction="row" gap={"10px"} useFlexGap>
+				<IconButton aria-label="delete" color='primary' onClick={handleClick}>
+					<MoreHorizIcon />
 				</IconButton>
 
-				<IconButton variant='contained' sx={{ backgroundColor: 'primary.light' }} type='submit' >
-					<EditIcon />
-				</IconButton> */}
+				<Menu
+					id="basic-menu"
+					anchorEl={anchorEl}
+					open={open}
+					onClose={handleClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					MenuListProps={{
+						'aria-labelledby': 'more options',
+					}}
+				>
+					<MenuItem  onClick={removeTask}>
+						<ListItemIcon color='primary' aria-label="delete">
+							<DeleteIcon fontSize="small" />
+						</ListItemIcon>
+						<ListItemText>Delete</ListItemText>
+					</MenuItem>
+
+					<MenuItem onClick={openEditDialog}>
+						<ListItemIcon color='primary' aria-label="edit">
+							<EditIcon fontSize="small" />
+						</ListItemIcon>
+						<ListItemText>Edit</ListItemText>
+					</MenuItem>
+
+					<MenuItem onClick={openEditDialog}>
+						<ListItemIcon color='primary' aria-label="info">
+							<InfoIcon fontSize="small" />
+						</ListItemIcon>
+						<ListItemText>Info</ListItemText>
+					</MenuItem>
+				</Menu>
 			</Stack>
 		</Stack>
 	)

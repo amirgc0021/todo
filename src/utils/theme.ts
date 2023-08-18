@@ -13,7 +13,6 @@ export default createTheme({
 			light: "#F6F2F0",
 			contrastText: "#000"
 		},
-
 	},
 	spacing: [20, 42, 5],
 	typography: {

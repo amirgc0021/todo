@@ -6,7 +6,7 @@
  * @returns {string} readable date.
  */
 export const toDate = (timestamp: number): string => {
-	return new Date(timestamp).toLocaleDateString();
+	return new Date(timestamp).toLocaleDateString("he-il");
 }
 
 /**

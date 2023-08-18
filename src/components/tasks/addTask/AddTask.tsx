@@ -73,6 +73,7 @@ export default function AddTask({ closeDialog, task }: Props) {
 						value={title}
 						onChange={handleTitleChange}
 						fullWidth
+						required
 					/>
 					<TextField
 						label="Task description"
