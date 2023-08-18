@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Box, IconButton, TextField, Typography } from '@mui/material';
+import { IconButton, TextField, Typography, Tooltip } from '@mui/material';
+
+import { useDispatch } from 'react-redux';
+import { deleteList, editList } from 'redux/listSlice';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { useDispatch } from 'react-redux';
-import { editList } from 'redux/listSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type Props = {
 	text: string,
@@ -29,7 +31,7 @@ export default function Header({ text, listId }: Props) {
 	// handle when clicking on the button to submit the changes
 	const handleEditTitle = () => {
 		// if value is empty use the prev value
-		if(!headerText){
+		if (!headerText) {
 			setHeaderText(text);
 			setEditTitle(false)
 			return
@@ -44,6 +46,10 @@ export default function Header({ text, listId }: Props) {
 		setEditTitle(state => !state)
 	}
 
+	const removeList = () => {
+		dispatch(deleteList(listId))
+	}
+
 	return (
 		<>
 			{
@@ -52,9 +58,17 @@ export default function Header({ text, listId }: Props) {
 					: <Typography variant="h1" marginRight="20px">{text}</Typography>
 			}
 
-			<IconButton aria-label="edit List name" onClick={handleEditTitle}>
-				<EditIcon />
-			</IconButton>
+			<Tooltip title="Edit list name">
+				<IconButton aria-label="edit List name" onClick={handleEditTitle}>
+					<EditIcon />
+				</IconButton>
+			</Tooltip>
+
+			<Tooltip title="Delete list">
+				<IconButton aria-label="delte list" onClick={removeList}>
+					<DeleteIcon />
+				</IconButton>
+			</Tooltip>
 		</>
 	)
 }

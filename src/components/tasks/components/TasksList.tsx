@@ -7,7 +7,7 @@ import TaskDialog from './TaskDialog';
 import { Dialog, Grid, Stack, Box, MenuItem, TextField, Button } from '@mui/material';
 
 import type { AppState } from 'redux/store';
-import type { IList, ItaskItem } from '../types';
+import type { ItaskItem } from '../types';
 
 import AddIcon from '@mui/icons-material/Add';
 import Header from './Header';

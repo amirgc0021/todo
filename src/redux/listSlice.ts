@@ -61,6 +61,13 @@ export const listSlice = createSlice({
 				})
 			}
 		},
+		deleteList: (state, action: PayloadAction<string>) => {
+			return {
+				...state,
+				lists: state.lists.filter(list => list.id !== action.payload),
+				activeList: 0
+			}
+		},
 		/**
 		 * Add new task.
 		 */
@@ -114,5 +121,5 @@ export const listSlice = createSlice({
 	}
 })
 
-export const { setActiveListIndex, createList, editList, createTask, removeTask, editTask } = listSlice.actions;
+export const { setActiveListIndex, createList, editList, deleteList, createTask, removeTask, editTask } = listSlice.actions;
 export default listSlice.reducer;

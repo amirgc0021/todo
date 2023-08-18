@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Typography, Checkbox, Stack, Box, Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Typography, Checkbox, Stack, Box, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
 import { useDispatch } from "react-redux";
 import { editTask, removeTask } from 'redux/listSlice';
 import { PrioityLabel } from "components/priority";
@@ -13,7 +13,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Create';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import InfoIcon from '@mui/icons-material/Info';
 
 type Props = {
 	item: ItaskItem,
@@ -76,9 +75,11 @@ export default function TaskItem({ item, listId, openEditTaskDialog }: Props) {
 			</Box>
 
 			<Box>
+				<Tooltip title="More options">
 				<IconButton aria-label="delete" onClick={openItemMenu}>
 					<MoreHorizIcon />
 				</IconButton>
+				</Tooltip>
 
 				<Menu
 					id="basic-menu"
