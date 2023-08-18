@@ -17,7 +17,10 @@ export const listSlice = createSlice({
 	name: "listSlice",
 	initialState,
 	reducers: {
-		setActiveList: (state, action: PayloadAction<number>) => {
+		/**
+		 * Update active list so we can access it
+		 */
+		setActiveListIndex: (state, action: PayloadAction<number>) => {
 			const listIndex = action.payload;
 			if (listIndex >= state.lists.length) throw new Error("overflow");
 
@@ -26,6 +29,9 @@ export const listSlice = createSlice({
 				activeList: listIndex
 			}
 		},
+		/**
+		 * Create new list
+		 */
 		createList: (state, action: PayloadAction<string>) => {
 			const newList = new GenerateList(action.payload);
 
@@ -34,6 +40,9 @@ export const listSlice = createSlice({
 				lists: [...state.lists, newList]
 			}
 		},
+		/**
+		 * Editing list
+		 */
 		editList: (state, action: PayloadAction<editListAction>) => {
 			const { listId, listData } = action.payload;
 
@@ -102,5 +111,5 @@ export const listSlice = createSlice({
 	}
 })
 
-export const { setActiveList, createList, editList, createTask, removeTask, editTask } = listSlice.actions;
+export const { setActiveListIndex, createList, editList, createTask, removeTask, editTask } = listSlice.actions;
 export default listSlice.reducer;

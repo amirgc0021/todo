@@ -2,10 +2,9 @@ import { useRef, useState } from "react";
 import { Box, Button, List, TextField, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "redux/store"
-import { createList, setActiveList } from "redux/listSlice";
+import { createList, setActiveListIndex } from "redux/listSlice";
 import ListItem from "./ListItem";
 import AddIcon from '@mui/icons-material/Add';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 type Props = {}
 
@@ -34,7 +33,7 @@ export default function Lists({ }: Props) {
 
 	// when list item clicked
 	const onListItemClicked = (index: number) => {
-		dispatch(setActiveList(index))
+		dispatch(setActiveListIndex(index))
 	}
 
 	// add item clicked
