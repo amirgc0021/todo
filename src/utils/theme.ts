@@ -13,7 +13,7 @@ export default createTheme({
 			contrastText: "#fff"
 		}
 	},
-	spacing: [10, 15, 20],
+	spacing: [10, 15, 20, 40],
 	typography: {
 		h1: {
 			fontSize: "37px",
@@ -33,37 +33,6 @@ export default createTheme({
 					borderRadius: "5px"
 				}
 			}
-		},
-		MuiButton: {
-			variants: [
-				{
-					props: { variant: "text" },
-					style: { color: "#000" }
-				},
-			],
-			styleOverrides: {
-				containedSecondary: {
-					":hover":{
-						// backgroundColor: "red"
-					},
-				}
-			}
-		},
-		MuiCheckbox: {
-			defaultProps: {
-				// "color": "secondary"
-			}
 		}
 	}
-})
-
-// mode: "dark",
-// primary: {
-// 	main: "#414141",
-// 	contrastText: "#fff"
-// },
-// secondary: {
-// 	main: "#fff",
-// 	contrastText: "#fff "
-// },
-// contrastThreshold: 4.5,
+});

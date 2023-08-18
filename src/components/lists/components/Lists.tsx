@@ -5,6 +5,7 @@ import { AppState } from "redux/store"
 import { createList, setActiveList } from "redux/listSlice";
 import ListItem from "./ListItem";
 import AddIcon from '@mui/icons-material/Add';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 type Props = {}
 
@@ -59,38 +60,34 @@ export default function Lists({ }: Props) {
 	}
 
 	return (
-		<Box sx={{ bgcolor: "primary.main", p: 0 }} width="300px" height="100vh">
-			<Typography variant="h2">
-				My lists
-			</Typography>
+		<Box width="300px" height="100vh">
+			<Box sx={{ bgcolor: "primary.main", padding: "50px 20px 0", zIndex: 10}} paddingTop={1} position={"fixed"} width="300px" height="100%">
+				<Typography variant="h2">
+					My lists
+				</Typography>
 
-			<Box>
-				<List>
-					{lists.map((list, index) => <ListItem
-						key={list.id}
-						title={list.title}
-						index={index}
-						numTasks={list.tasks.length}
-						onClick={onListItemClicked}
-					/>)}
+				<Box>
+					<List>
+						{lists.map((list, index) => <ListItem
+							key={list.id}
+							title={list.title}
+							index={index}
+							numTasks={list.tasks.length}
+							onClick={onListItemClicked}
+						/>)}
+
+						<Box textAlign="center">
+							{displayNewListItem && <TextField color="secondary" placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} />}
+						</Box>
+					</List>
 
 					<Box textAlign="center">
-						{displayNewListItem && <TextField sx={style} placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} />}
+						<Button color="secondary" variant="text" startIcon={<AddIcon />} onClick={onAddItemClicked} ref={addItemRef}>
+							{displayNewListItem ? "Add item" : "New List"}
+						</Button>
 					</Box>
-				</List>
-
-				<Box textAlign="center">
-					<Button variant="text" startIcon={<AddIcon />} onClick={onAddItemClicked} ref={addItemRef}>
-						{displayNewListItem ? "Add item" : "New List"}
-					</Button>
 				</Box>
 			</Box>
 		</Box>
 	)
-}
-
-const style = {
-	".Mui-focused": {
-		outline: "1px solid #000"
-	}
 }

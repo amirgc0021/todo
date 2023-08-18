@@ -1,17 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { IList, ItaskItem, newTaskAction, editTaskAction, removeTaskAction, editListAction } from "components/tasks/types";
-import Tasks from "data/mockItems.json";
+import type { IList, newTaskAction, editTaskAction, removeTaskAction, editListAction } from "components/tasks/types";
 import ListMockData from "data/lists.json";
 import { GenerateList, GenerateTask } from "utils/generators";
 
 type SliceState = {
 	lists: IList[],
 	activeList: number,
-	todoList: ItaskItem[],
 }
 
 const initialState: SliceState = {
-	todoList: Tasks as ItaskItem[],
 	lists: ListMockData as IList[],
 	activeList: 0
 }

@@ -25,7 +25,8 @@ export default function TasksList() {
 	const [tasksList, setTasksList] = useState<ItaskItem[]>(list.tasks);
 
 	const [activeUpdateTask, setActiveUpdateTask] = useState<TaskDialogType>({ open: false, taskData: null });
-	const [activeSort, setActiveSort] = useState<sortBy>("priority");
+	const [searchVal, setSearchVal] = useState<string>("");
+	const [activeSort, setActiveSort] = useState<sortBy | "">("");
 
 	// since we don't want to always change the redux state (e.x in sort)
 	// I created another "local state" that will listen for any update from original state
@@ -69,7 +70,17 @@ export default function TasksList() {
 			const newList = copyTasks.sort((a, b) => ranks[a.priority] - ranks[b.priority]);
 			setTasksList(newList)
 		}
-	}, [tasksList])
+	}, [tasksList]);
+
+	const handleSerach = (e:React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		const regex = new RegExp(value, "gi");
+
+		setSearchVal(value);
+
+		const newList = list.tasks.filter(task => regex.test(task.title))
+		setTasksList(newList)
+	}
 
 	// memo task list component to not rerender on unrealted updates
 	const tasksListMemo = useMemo(() => {
@@ -97,34 +108,40 @@ export default function TasksList() {
 
 	return (
 		<Box>
-			<Stack direction="row" marginBottom="20px" marginTop="20px">
+			<Stack direction="row" marginBottom="10px" marginTop="20px">
 				<Header text={list.title} listId={list.id} />
 			</Stack>
 
-			<Box>
-				<Button variant="text" startIcon={<AddIcon color='secondary' />} onClick={openNewTaskDialog}>
+			<Box marginBottom={"40px"}>
+				<Button variant="text" sx={{ color: "#000" }} startIcon={<AddIcon color="secondary" />} onClick={openNewTaskDialog}>
 					New Task
 				</Button>
-	
 			</Box>
 
 			<Stack useFlexGap rowGap={"10px"}>
-				{/* <Box width={"100%"}>
+				<Box width={"100%"}>
 					<TextField
+						color='secondary'
 						label="Search"
-						variant="filled"
+						variant="standard"
 						fullWidth
+						value={searchVal}
+						onChange={handleSerach}
 					/>
-				</Box> */}
+				</Box>
 
 				<Box>
 					<TextField
+						color='secondary'
 						select
+						variant='outlined'
 						label="Sort By"
 						margin="normal"
 						value={activeSort}
 						onChange={handleSortByChange}
+						sx={{ minWidth: "150px" }}
 					>
+						<MenuItem value="" disabled>Choose sort by</MenuItem>
 						<MenuItem value="priority">Sort by priority (high - low)</MenuItem>
 						<MenuItem value="time">Sort by time (early - later)</MenuItem>
 					</TextField>

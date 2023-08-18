@@ -49,7 +49,7 @@ export default function Header({ text, listId }: Props) {
 			{
 				editTitle
 					? <TextField value={headerText} onChange={handleChange} placeholder="List name" />
-					: <Typography variant="h1" marginRight="20px" >{text}</Typography>
+					: <Typography variant="h1" marginRight="20px">{text}</Typography>
 			}
 
 			<IconButton aria-label="edit List name" onClick={handleEditTitle}>
