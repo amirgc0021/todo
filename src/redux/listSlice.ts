@@ -1,7 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { IList, newTaskAction, editTaskAction, removeTaskAction, editListAction } from "components/tasks/types";
-import ListMockData from "data/lists.json";
 import { GenerateList, GenerateTask } from "utils/generators";
+import { getFromStorage } from "utils/localStorage";
+
+// use this for mock data 
+// import ListMockData from "data/lists.json";
 
 type SliceState = {
 	lists: IList[],
@@ -9,7 +12,7 @@ type SliceState = {
 }
 
 const initialState: SliceState = {
-	lists: ListMockData as IList[],
+	lists: getFromStorage<IList[]>("list", []) || [],
 	activeList: 0
 }
 

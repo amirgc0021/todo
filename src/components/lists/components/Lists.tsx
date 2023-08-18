@@ -60,20 +60,27 @@ export default function Lists({ }: Props) {
 
 	return (
 		<Box width="300px" height="100vh">
-			<Box sx={{ bgcolor: "primary.main", padding: "50px 20px 0", zIndex: 10}} paddingTop={1} position={"fixed"} width="300px" height="100%">
+			<Box sx={{ bgcolor: "primary.main", padding: "50px 20px 0", zIndex: 10 }} paddingTop={1} position={"fixed"} width="300px" height="100%">
 				<Typography variant="h2">
 					My lists
 				</Typography>
 
 				<Box>
 					<List>
-						{lists.map((list, index) => <ListItem
-							key={list.id}
-							title={list.title}
-							index={index}
-							numTasks={list.tasks.length}
-							onClick={onListItemClicked}
-						/>)}
+						{
+							lists.length === 0
+								? <Typography variant="body1">
+									No lists, add new one now!
+								</Typography>
+								: (
+									lists.map((list, index) => <ListItem
+									key={list.id}
+									title={list.title}
+									index={index}
+									numTasks={list.tasks.length}
+									onClick={onListItemClicked}
+								/>)
+								)}
 
 						<Box textAlign="center">
 							{displayNewListItem && <TextField color="secondary" placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} />}

@@ -60,7 +60,7 @@ export default function TaskItem({ item, listId, openEditTaskDialog }: Props) {
 	}
 
 	return (
-		<Stack sx={{ bgcolor: "primary.main", p: 0, borderRadius: "10px" }} alignItems="center" direction="row">
+		<Stack sx={{ bgcolor: "primary.main", p: 0, borderRadius: "10px", minWidth:"450px", maxWidth: "450px" }} alignItems="center" direction="row">
 			<Box>
 				<Checkbox color="secondary" checked={item.done} checkedIcon={<CheckBoxIcon />} onChange={updateTaskDoneState} />
 			</Box>
@@ -105,13 +105,6 @@ export default function TaskItem({ item, listId, openEditTaskDialog }: Props) {
 							<EditIcon fontSize="small" />
 						</ListItemIcon>
 						<ListItemText>Edit</ListItemText>
-					</MenuItem>
-
-					<MenuItem onClick={openEditDialog}>
-						<ListItemIcon color='primary' aria-label="info">
-							<InfoIcon fontSize="small" />
-						</ListItemIcon>
-						<ListItemText>Info</ListItemText>
 					</MenuItem>
 				</Menu>
 			</Box>

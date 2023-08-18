@@ -80,6 +80,7 @@ export default function TaskDialog({ closeDialog, task, listId }: Props) {
 						onChange={handleTitleChange}
 						fullWidth
 						required
+						color='secondary'
 					/>
 					<TextField
 						label="Task description"
@@ -90,6 +91,7 @@ export default function TaskDialog({ closeDialog, task, listId }: Props) {
 						onChange={handleDescriptionChange}
 						multiline
 						fullWidth
+						color='secondary'
 					/>
 
 					<TextField
@@ -101,6 +103,7 @@ export default function TaskDialog({ closeDialog, task, listId }: Props) {
 						name="priority"
 						value={priority}
 						onChange={handlePriorityChange}
+						color='secondary'
 					>
 						<MenuItem value="low">Low</MenuItem>
 						<MenuItem value="medium">Medium</MenuItem>

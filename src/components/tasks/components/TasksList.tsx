@@ -7,7 +7,7 @@ import TaskDialog from './TaskDialog';
 import { Dialog, Grid, Stack, Box, MenuItem, TextField, Button } from '@mui/material';
 
 import type { AppState } from 'redux/store';
-import type { ItaskItem } from '../types';
+import type { IList, ItaskItem } from '../types';
 
 import AddIcon from '@mui/icons-material/Add';
 import Header from './Header';
@@ -22,8 +22,7 @@ type sortBy = "priority" | "time";
 export default function TasksList() {
 	const list = useSelector((state: AppState) => state.listSlice.lists[state.listSlice.activeList]);
 
-	const [tasksList, setTasksList] = useState<ItaskItem[]>(list.tasks);
-
+	const [tasksList, setTasksList] = useState<ItaskItem[]>([]);
 	const [activeUpdateTask, setActiveUpdateTask] = useState<TaskDialogType>({ open: false, taskData: null });
 	const [searchVal, setSearchVal] = useState<string>("");
 	const [activeSort, setActiveSort] = useState<sortBy | "">("");
@@ -32,7 +31,7 @@ export default function TasksList() {
 	// I created another "local state" that will listen for any update from original state
 	// but will also responsible to display local changes (sort) 
 	useEffect(() => {
-		setTasksList(list.tasks)
+		setTasksList(list?.tasks || [])
 	}, [list])
 
 	// open the task dialog in "new" mode
@@ -72,7 +71,7 @@ export default function TasksList() {
 		}
 	}, [tasksList]);
 
-	const handleSerach = (e:React.ChangeEvent<HTMLInputElement>) => {
+	const handleSerach = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		const regex = new RegExp(value, "gi");
 
@@ -106,10 +105,14 @@ export default function TasksList() {
 		))
 	}, [tasksList, list]);
 
+	if (!list) {
+		return <img src="/emptyImage.jpg" width="500px" style={{ objectFit: "contain" }} />
+	}
+
 	return (
 		<Box>
 			<Stack direction="row" marginBottom="10px" marginTop="20px">
-				<Header text={list.title} listId={list.id} />
+				{list !== undefined && <Header text={list.title} listId={list.id} />}
 			</Stack>
 
 			<Box marginBottom={"40px"}>
