@@ -108,10 +108,10 @@ export default function TaskDialog({ closeDialog, task, listId }: Props) {
 					</TextField>
 
 					<Stack direction="row" spacing={2} justifyContent={'flex-end'} useFlexGap>
-						<Button variant="outlined" onClick={closeDialog}>
+						<Button variant="outlined" onClick={closeDialog} color='secondary'>
 							Cancel
 						</Button>
-						<Button variant='contained' type='submit'>
+						<Button variant='contained' type='submit' color='secondary' >
 							{!task ? "Add" : "Edit"}
 						</Button>
 					</Stack>

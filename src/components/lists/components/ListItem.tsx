@@ -8,7 +8,7 @@ type Props = {
 }
 
 const style: SxProps = [
-	{ paddingInline: 2, mb: 1 },
+	{ paddingInline: 2, mb: 0 },
 	{
 		"&:hover": {
 			bgcolor: "primary.light"

@@ -35,9 +35,6 @@ export default createTheme({
 			}
 		},
 		MuiButton: {
-			defaultProps: {
-				disableRipple: true
-			},
 			variants: [
 				{
 					props: { variant: "text" },
@@ -45,17 +42,10 @@ export default createTheme({
 				},
 			],
 			styleOverrides: {
-				contained: ({theme}) => {
-					return {
-						backgroundColor: theme.palette.secondary.main,
-						color: theme.palette.secondary.contrastText,
-					}
-				},
-				outlined: ({theme}) => {
-					return {
-						borderColor: theme.palette.secondary.main,
-						color: theme.palette.secondary.main,
-					}
+				containedSecondary: {
+					":hover":{
+						// backgroundColor: "red"
+					},
 				}
 			}
 		},
