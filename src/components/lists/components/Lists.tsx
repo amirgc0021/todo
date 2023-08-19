@@ -22,6 +22,15 @@ export default function Lists({ }: Props) {
 		setNewListName(e.target.value)
 	}
 
+	// when key down while input is is foucs
+	const onkeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		// if the key which presses isn't enter stop here
+		if(e.key !== "Enter") return;
+
+		onAddItemClicked()
+
+	}
+
 	// when input loses foucs
 	const onInputLoseFocus = (e: React.FocusEvent<HTMLInputElement>) => {
 		// id we clicked on the "add item button" do nothing and let the button event handle it
@@ -83,7 +92,7 @@ export default function Lists({ }: Props) {
 								)}
 
 						<Box textAlign="center">
-							{displayNewListItem && <TextField color="secondary" placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} />}
+							{displayNewListItem && <TextField color="secondary" placeholder="New list" autoFocus value={newListName} onChange={handleNewListChagne} onBlur={onInputLoseFocus} onKeyDown={onkeyDownHandler} />}
 						</Box>
 					</List>
 
