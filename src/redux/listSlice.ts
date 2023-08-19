@@ -61,6 +61,9 @@ export const listSlice = createSlice({
 				})
 			}
 		},
+		/**
+		 * Delete List, set active list to 0
+		 */
 		deleteList: (state, action: PayloadAction<string>) => {
 			return {
 				...state,

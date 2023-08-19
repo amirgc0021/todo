@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import TaskItem from './TaskItem';
@@ -81,29 +81,12 @@ export default function TasksList() {
 		setTasksList(newList)
 	}
 
-	// memo task list component to not rerender on unrealted updates
-	const tasksListMemo = useMemo(() => {
-		if (!tasksList.length) {
-			return <img src="/emptyImage.jpg" width="500px" />
-		}
-
-		// this function going here to prevent new instance of this function
-		const openTaskDialogInEditMode = (task: ItaskItem) => {
-			setActiveUpdateTask({
-				open: true,
-				taskData: task
-			})
-		}
-
-		return tasksList.map(item => (
-			<TaskItem
-				key={item.id}
-				item={item}
-				listId={list.id}
-				openEditTaskDialog={openTaskDialogInEditMode}
-			/>
-		))
-	}, [tasksList, list]);
+	const openTaskDialogInEditMode = useCallback((task: ItaskItem) => {
+		setActiveUpdateTask({
+			open: true,
+			taskData: task
+		})
+	},[])
 
 	if (!list) {
 		return <img src="/emptyImage.jpg" width="500px" style={{ objectFit: "contain" }} />
@@ -152,7 +135,17 @@ export default function TasksList() {
 			</Stack>
 
 			<Grid container direction={"column"} rowGap={"10px"}>
-				{tasksListMemo}
+				{tasksList.length > 0
+					? (tasksList.map(item => (
+						<TaskItem
+							key={item.id}
+							item={item}
+							listId={list.id}
+							openEditTaskDialog={openTaskDialogInEditMode}
+						/>
+					)))
+					: <img src="/emptyImage.jpg" width="500px" />
+				}
 			</Grid>
 
 			<Dialog open={activeUpdateTask.open} sx={{ p: 0 }} onClose={closeDialog}>
