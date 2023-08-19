@@ -1,9 +1,10 @@
-import { Box, ListItemButton, SxProps } from '@mui/material'
+import { Box, ListItemButton, SxProps, Typography } from '@mui/material'
 
 type Props = {
 	title: string,
 	index: number,
-	numTasks: number
+	numTasks: number,
+	isActive: boolean,
 	onClick: (index: number) => void
 }
 
@@ -16,18 +17,18 @@ const style: SxProps = [
 	}
 ]
 
-export default function ListItem({ title, index, numTasks, onClick }: Props) {
+export default function ListItem({ title, index, numTasks, isActive, onClick }: Props) {
 	const onItemClicked = () => {
 		onClick(index)
 	}
 	return (
 		<ListItemButton onClick={onItemClicked} sx={style}>
-			<Box component="span">
+			<Typography component="span" fontWeight={isActive ? "600" : "400"}>
 				{title}
-			</Box>
-			<Box component="span" sx={{p: "5px", ml: "auto"}}>
+			</Typography>
+			<Typography component="span" sx={{ p: "5px", ml: "auto" }}>
 				{numTasks}
-			</Box>
+			</Typography>
 		</ListItemButton>
 	)
 }

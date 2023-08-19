@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Box, Button, List, TextField, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "redux/store"
@@ -11,7 +11,10 @@ type Props = {}
 export default function Lists({ }: Props) {
 	const dispatch = useDispatch();
 
-	const lists = useSelector((state: AppState) => state.listSlice.lists);
+	const { lists, activeIndex } = useSelector((state: AppState) => ({
+		lists: state.listSlice.lists,
+		activeIndex: state.listSlice.activeList
+	}));
 	const addItemRef = useRef<HTMLButtonElement>(null)
 
 	const [displayNewListItem, setDisplayNewListItem] = useState<boolean>(false)
@@ -25,7 +28,7 @@ export default function Lists({ }: Props) {
 	// when key down while input is is foucs
 	const onkeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		// if the key which presses isn't enter stop here
-		if(e.key !== "Enter") return;
+		if (e.key !== "Enter") return;
 
 		onAddItemClicked()
 
@@ -41,9 +44,9 @@ export default function Lists({ }: Props) {
 	}
 
 	// when list item clicked
-	const onListItemClicked = (index: number) => {
+	const onListItemClicked = useCallback((index: number) => {
 		dispatch(setActiveListIndex(index))
-	}
+	}, []);
 
 	// add item clicked
 	const onAddItemClicked = () => {
@@ -83,12 +86,13 @@ export default function Lists({ }: Props) {
 								</Typography>
 								: (
 									lists.map((list, index) => <ListItem
-									key={list.id}
-									title={list.title}
-									index={index}
-									numTasks={list.tasks.length}
-									onClick={onListItemClicked}
-								/>)
+										key={list.id}
+										title={list.title}
+										index={index}
+										isActive={index === activeIndex}
+										numTasks={list.tasks.length}
+										onClick={onListItemClicked}
+									/>)
 								)}
 
 						<Box textAlign="center">
