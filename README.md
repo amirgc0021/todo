@@ -15,7 +15,8 @@ use `npm i`
 3) Start development server (local environment) \
 use `npm run dev`\
 server should start on port: `3000`
-
+4) For creating a production bundle\
+use `npm run build`
 ## Tech stack
 - **React**: for UI manipulation.
 - **Redux**: for state managment.
