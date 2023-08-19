@@ -67,7 +67,7 @@ export default function TasksList() {
 			}
 
 			const newList = copyTasks.sort((a, b) => ranks[a.priority] - ranks[b.priority]);
-			setTasksList(newList)
+			setTasksList(newList);
 		}
 	}, [tasksList]);
 
