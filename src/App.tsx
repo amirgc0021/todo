@@ -2,9 +2,7 @@ import { Stack } from '@mui/material'
 import { Lists } from 'components/lists'
 import { TaskList } from 'components/tasks'
 
-type Props = {}
-
-export default function App({}: Props) {
+export default function App() {
 
 	return (
 		<Stack direction="row" columnGap="50px" useFlexGap>

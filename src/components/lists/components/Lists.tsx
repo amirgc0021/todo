@@ -6,9 +6,7 @@ import { createList, setActiveListIndex } from "redux/listSlice";
 import ListItem from "./ListItem";
 import AddIcon from '@mui/icons-material/Add';
 
-type Props = {}
-
-export default function Lists({ }: Props) {
+export default function Lists() {
 	const dispatch = useDispatch();
 
 	const { lists, activeIndex } = useSelector((state: AppState) => ({
@@ -46,7 +44,7 @@ export default function Lists({ }: Props) {
 	// when list item clicked
 	const onListItemClicked = useCallback((index: number) => {
 		dispatch(setActiveListIndex(index))
-	}, []);
+	}, [dispatch]);
 
 	// add item clicked
 	const onAddItemClicked = () => {

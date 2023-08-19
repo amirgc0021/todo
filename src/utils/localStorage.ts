@@ -13,17 +13,14 @@ export function getFromStorage<T>(key: string, defaultVal?: T): T | null {
 
 /**
  * save item in local storage
+ * 
  * @param {string} key The key if the item from the storage 
  * @param value The data itself, if data is not string data will stringify
  */
-export function setStorage(key: string, value: any) {
-	try {
-		if (typeof value === "string")
-			localStorage.setItem(key, value)
-		else
-			localStorage.setItem(key, JSON.stringify(value))
-	}
-	catch (err) {
-		throw err
-	}
+export function setStorage<T>(key: string, value: T) {
+	// if value is not string we will need to stringift it
+	if (typeof value === "string")
+		localStorage.setItem(key, value)
+	else
+		localStorage.setItem(key, JSON.stringify(value))
 }

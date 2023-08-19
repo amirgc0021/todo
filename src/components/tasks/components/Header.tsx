@@ -21,7 +21,7 @@ export default function Header({ text, listId }: Props) {
 	useEffect(() => {
 		setHeaderText(text)
 		setEditTitle(false)
-	}, [listId])
+	}, [listId, text])
 
 	// handle header text change
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

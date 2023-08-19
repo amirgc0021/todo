@@ -1,4 +1,4 @@
-import { Box, ListItemButton, SxProps, Typography } from '@mui/material'
+import { ListItemButton, SxProps, Typography } from '@mui/material'
 
 type Props = {
 	title: string,
